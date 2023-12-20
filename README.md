@@ -9,7 +9,13 @@ game will have enemies/spikes you have to avoid
 possibly add shooting to the game for bonus
 create a check of where character is at every frame
 
+12/19/23
+going to start from scratch 
 
+arrowleft keycode = 37
+arrowRight keycode = 39
+arrowUp keycode = 38
+arrowDown keycode = 40
 CREDITS
 Grape Man Gifs from Booty Kong on itch.io
 https://booty-kong.itch.io/small-animated-2d-grape-character
