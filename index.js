@@ -5,7 +5,7 @@ canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 
 const gravity = .25
-
+//player class to create the player
 class Player {
     constructor() {
         this.position = { 
@@ -37,8 +37,35 @@ class Player {
         
     }
 }
+//platform class to create platforms
+class Platform {
+    constructor({x, y}){
+       this.position = {
+        x: x,
+        y: y
+       }
+
+       this.width = 200
+       this.height = 20
+    }
+
+    draw(){
+        context.fillStyle = 'blue'
+        context.fillRect(this.position.x, this.position.y,
+            this.width, this.height)
+    }
+}
 
 const player = new Player()
+//adding new platforms
+const platforms = [
+    new Platform({x: 600, y:1300}),
+    new Platform({x: 800, y:1200}),
+    new Platform({x: 1000, y:1100}),
+    new Platform({x: 1200, y:1000})
+
+]
+
 const keys = {
     right: {
         pressed: false
@@ -48,20 +75,60 @@ const keys = {
     }
 }
 
+let scrollOffset = 0
 
+//adds player/platforms to screen
 function animate() {
     requestAnimationFrame(animate) 
     context.clearRect(0, 0, canvas.width, canvas.height)
     player.update()
-    if (keys.right.pressed) {
-        player.velocity.x = 1
-    } else if (keys.left.pressed) {
-        player.velocity.x = -1
-    } 
-    else player.velocity.x = 0 
+    platforms.forEach((platform) => {
+        platform.draw()
+    })
+    
+    if (keys.right.pressed && player.position.x < 410) {
+        player.velocity.x = 1} 
+        else if (keys.left.pressed && player.position.x > 100) {
+        player.velocity.x = -1} 
+        else {player.velocity.x = 0
+//created scrolling effect
+        if (keys.right.pressed) { 
+            scrollOffset += 1
+            platforms.forEach((platform) => {
+                platform.position.x -= 1
+                })
+             } 
+        else if (keys.left.pressed) {
+            scrollOffset -= 1
+            platforms.forEach((platform) => {
+                platform.position.x += 1
+            })
+        }
+    }
+
+    
+    //platform colision detection
+    platforms.forEach((platform) => {
+    if (
+        player.position.y + player.height <=
+            platform.position.y &&
+         player.position.y + player.height +
+            player.velocity.y >= 
+            platform.position.y && 
+        player.position.x + player.width >= 
+        platform.position.x && 
+        player.position.x <= platform.position.x + platform.width
+        ){
+            player.velocity.y = 0
+        }
+    })
+
+    if (scrollOffset > 1000) {
+        console.log('you win')
+    }
 }
 animate()
-
+// keydown controls to move
 addEventListener('keydown', ({ keyCode }) =>{
     
     switch (keyCode) {
@@ -75,9 +142,9 @@ addEventListener('keydown', ({ keyCode }) =>{
             keys.right.pressed = true
             break
 
-        case 38:
+        case 32:
             console.log('up')
-            player.velocity.y -= 8
+            player.velocity.y -= 15
             break
 
         case 40:
@@ -86,7 +153,7 @@ addEventListener('keydown', ({ keyCode }) =>{
     }
     
 })
-
+//keyup controls to stop moving
 addEventListener('keyup', ({ keyCode }) =>{
     
     switch (keyCode) {
@@ -100,10 +167,10 @@ addEventListener('keyup', ({ keyCode }) =>{
             keys.right.pressed = false
             break
 
-        case 38:
-            console.log('up')
-            player.velocity.y -= 10
-            break
+        // case 32:
+        //     console.log('up')
+        //     player.velocity.y -= 8
+        //     break 
 
         case 40:
             console.log('down')
