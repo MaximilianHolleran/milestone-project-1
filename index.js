@@ -1,6 +1,3 @@
-import platform from './assets/platform-long.png'
-
-
 const canvas = document.querySelector('canvas')
 const context = canvas.getContext('2d')
 
@@ -45,31 +42,39 @@ class Platform {
     constructor({x, y, image}){
        this.position = {
         x: x,
-        y: y
+        y: y,
+        image: image
        }
-
-       this.width = 200
-       this.height = 20
-
        this.image = image
+       this.width = image.width
+       this.height = 20
+       
+       
     }
 
     draw(){
-        canvas.drawImage(this.image, this.position.x, this.position.y)
+        
+        context.drawImage( this.image, this.position.x, this.position.y)
     }
 }
 
 const image = new Image()
-image.src = platform
+image.src = './assets/platform-long.png'
 
 
 const player = new Player()
 //adding new platforms
 const platforms = [
-    new Platform({x: 600, y:1300, image: ''}),
-    new Platform({x: 800, y:1200}),
-    new Platform({x: 1000, y:1100}),
-    new Platform({x: 1200, y:1000})
+    new Platform({x: 600, y:1300, image}),
+    new Platform({x: 800, y:1300, image}),
+    new Platform({x: 1000, y:1300, image}),
+    new Platform({x: 1200, y:1200, image}),
+    new Platform({x: 1400, y:1200, image}),
+    new Platform({x: 1600, y:1200, image}),
+    new Platform({x: 1800, y:1100, image}),
+    new Platform({x: 2000, y:1100, image}),
+    new Platform({x: 2200, y:1000, image}),
+    new Platform({x: 2400, y:1000, image}),
 
 ]
 
