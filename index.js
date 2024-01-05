@@ -1,3 +1,6 @@
+import platform from './assets/platform-long.png'
+
+
 const canvas = document.querySelector('canvas')
 const context = canvas.getContext('2d')
 
@@ -39,7 +42,7 @@ class Player {
 }
 //platform class to create platforms
 class Platform {
-    constructor({x, y}){
+    constructor({x, y, image}){
        this.position = {
         x: x,
         y: y
@@ -47,19 +50,23 @@ class Platform {
 
        this.width = 200
        this.height = 20
+
+       this.image = image
     }
 
     draw(){
-        context.fillStyle = 'blue'
-        context.fillRect(this.position.x, this.position.y,
-            this.width, this.height)
+        canvas.drawImage(this.image, this.position.x, this.position.y)
     }
 }
+
+const image = new Image()
+image.src = platform
+
 
 const player = new Player()
 //adding new platforms
 const platforms = [
-    new Platform({x: 600, y:1300}),
+    new Platform({x: 600, y:1300, image: ''}),
     new Platform({x: 800, y:1200}),
     new Platform({x: 1000, y:1100}),
     new Platform({x: 1200, y:1000})

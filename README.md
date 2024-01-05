@@ -16,6 +16,8 @@ arrowleft keycode = 37
 arrowRight keycode = 39
 arrowUp keycode = 38
 arrowDown keycode = 40
+
 CREDITS
-Grape Man Gifs from Booty Kong on itch.io
-https://booty-kong.itch.io/small-animated-2d-grape-character
+Game Assets -
+Sunny Land by Anismuz on https://ansimuz.itch.io/sunny-land-pixel-game-art
+Grape man by Booty Kong on https://booty-kong.itch.io/small-animated-2d-grape-character
