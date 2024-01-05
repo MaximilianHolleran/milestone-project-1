@@ -1,13 +1,16 @@
+
+
 const canvas = document.querySelector('canvas')
 const context = canvas.getContext('2d')
 
-canvas.width = window.innerWidth
-canvas.height = window.innerHeight
+canvas.width = 1024
+canvas.height = 576
 
-const gravity = .25
+const gravity = 1
 //player class to create the player
 class Player {
     constructor() {
+        this.speed = 10
         this.position = { 
             x: 100,
             y: 100
@@ -33,7 +36,7 @@ class Player {
         if (this.position.y +this.height + 
         this.velocity.y <= canvas.height)
         this.velocity.y += gravity
-        else this.velocity.y = 0
+        
         
     }
 }
@@ -47,8 +50,7 @@ class Platform {
        }
        this.image = image
        this.width = image.width
-       this.height = 20
-       
+       this.height = image.height  
        
     }
 
@@ -58,25 +60,19 @@ class Platform {
     }
 }
 
-const image = new Image()
+let player = new Player()
+
+let backgroundImage = new Image();
+backgroundImage.src = './assets/back.png';
+
+let image = new Image()
 image.src = './assets/platform-long.png'
 
-
-const player = new Player()
 //adding new platforms
-const platforms = [
-    new Platform({x: 600, y:1300, image}),
-    new Platform({x: 800, y:1300, image}),
-    new Platform({x: 1000, y:1300, image}),
-    new Platform({x: 1200, y:1200, image}),
-    new Platform({x: 1400, y:1200, image}),
-    new Platform({x: 1600, y:1200, image}),
-    new Platform({x: 1800, y:1100, image}),
-    new Platform({x: 2000, y:1100, image}),
-    new Platform({x: 2200, y:1000, image}),
-    new Platform({x: 2400, y:1000, image}),
+let platforms = [
 
 ]
+
 
 const keys = {
     right: {
@@ -89,31 +85,63 @@ const keys = {
 
 let scrollOffset = 0
 
+//init function resets the game when you fall
+function init(){
+
+backgroundImage = new Image();
+backgroundImage.src = './assets/back.png';
+
+image = new Image()
+image.src = './assets/platform-long.png'
+
+player = new Player()
+
+//adding new platforms
+ platforms = [
+    new Platform({x: -1, y:520, image}),
+    new Platform({x: 125, y:520, image}),
+    new Platform({x: 250, y:520, image}),
+    new Platform({x: 500, y:520, image}),
+    new Platform({x: 625, y:520, image}),
+    new Platform({x: 750, y:520, image}),
+    new Platform({x: 875, y:520, image}),
+    new Platform({x: 1000, y:520, image}),
+    new Platform({x: 1200, y:520, image}),
+    new Platform({x: 1400, y:520, image}),
+    new Platform({x: 1525, y:520, image}),
+    new Platform({x: 1700, y:520, image}),
+    new Platform({x: 1825, y:520, image}),
+
+]
+
+scrollOffset = 0
+}
+
 //adds player/platforms to screen
 function animate() {
-    requestAnimationFrame(animate) 
-    context.clearRect(0, 0, canvas.width, canvas.height)
-    player.update()
+    requestAnimationFrame(animate)
+    context.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
     platforms.forEach((platform) => {
         platform.draw()
     })
-    
-    if (keys.right.pressed && player.position.x < 410) {
-        player.velocity.x = 1} 
+    player.update() //move player update lower so it shows up in front of platforms
+
+    if (keys.right.pressed && player.position.x < 400) {
+        player.velocity.x = player.speed} 
         else if (keys.left.pressed && player.position.x > 100) {
-        player.velocity.x = -1} 
+        player.velocity.x = -player.speed} 
         else {player.velocity.x = 0
 //created scrolling effect
         if (keys.right.pressed) { 
-            scrollOffset += 1
+            scrollOffset += player.speed
             platforms.forEach((platform) => {
-                platform.position.x -= 1
+                platform.position.x -= player.speed
                 })
              } 
         else if (keys.left.pressed) {
-            scrollOffset -= 1
+            scrollOffset -= player.speed
             platforms.forEach((platform) => {
-                platform.position.x += 1
+                platform.position.x += player.speed
             })
         }
     }
@@ -134,11 +162,17 @@ function animate() {
             player.velocity.y = 0
         }
     })
-
+    //win condition
     if (scrollOffset > 1000) {
         console.log('you win')
     }
+    //lose condition
+    if (player.position.y > canvas.height) {
+        init()
+    }
 }
+
+init()
 animate()
 // keydown controls to move
 addEventListener('keydown', ({ keyCode }) =>{
@@ -156,7 +190,7 @@ addEventListener('keydown', ({ keyCode }) =>{
 
         case 32:
             console.log('up')
-            player.velocity.y -= 15
+            player.velocity.y -= 10
             break
 
         case 40:
