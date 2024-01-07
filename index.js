@@ -88,10 +88,13 @@ class Platform {
 let player = new Player()
 
 let backgroundImage = new Image()
-backgroundImage.src = './assets/back.png'
+    backgroundImage.src = './assets/back.png'
 
 let image = new Image()
-image.src = './assets/platform-long.png'
+    image.src = './assets/platform-long.png'
+
+let winImage = new Image()
+    winImage.src = './assets/youWin.png'
 
 //adding new platforms
 let platforms = [
@@ -140,6 +143,20 @@ player = new Player()
     new Platform({x: 2550, y:520, image}),
     new Platform({x: 2670, y:520, image}),
     new Platform({x: 2900, y:520, image}),
+    new Platform({x: 3025, y:420, image}),
+    new Platform({x: 3150, y:320, image}),
+    new Platform({x: 3300, y:220, image}),
+    new Platform({x: 3900, y:520, image}),
+    new Platform({x: 4025, y:520, image}),
+    new Platform({x: 4150, y:520, image}),
+    new Platform({x: 4275, y:520, image}),
+    new Platform({x: 4400, y:520, image}),
+    new Platform({x: 4800, y:520, image}),
+    new Platform({x: 4925, y:520, image}),
+    new Platform({x: 5050, y:520, image}),
+    new Platform({x: 5175, y:520, image}),
+    new Platform({x: 5300, y:520, image}),
+
 ]
 
 scrollOffset = 0
@@ -196,8 +213,9 @@ function animate() {
     })
 
     // Win condition
-    if (scrollOffset > 1000) {
-        console.log('you win')
+    if (scrollOffset > 4900) {
+        context.drawImage(winImage, 0, 0, canvas.width, canvas.height)
+        return
     }
 
     // Lose condition
