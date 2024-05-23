@@ -1,0 +1,35 @@
+$primary-color: darkorange;
+$secondary-color: darkslateblue;
+$font-family: 'RetroFont', sans-serif;
+$text-shadow: 3px 3px 0px #000;
+
+h1 {
+    color: $primary-color;
+    font-size: 120px;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 200px;
+    font-family: $font-family;
+    text-shadow: $text-shadow;
+}
+
+body {
+    margin: 0;
+    background-color: $secondary-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+footer {
+    color: $primary-color;
+    font-size: 40px;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 100px;
+    font-family: $font-family;
+    text-shadow: $text-shadow;
+}

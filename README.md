@@ -3,6 +3,7 @@ Create a mario esque game
 
 collision detection
 Gravity implemntation 
+make sure monitor is set to 60 fps for animations to run correctly
 
 
 12/19/23
