@@ -3,6 +3,12 @@ $secondary-color: darkslateblue;
 $font-family: 'RetroFont', sans-serif;
 $text-shadow: 3px 3px 0px #000;
 
+@if ($primary-color == null or $primary-color == '') {
+    @error 'The $primary-color variable must be set and cannot be empty.';
+  }
+
+  //set primary color to null for testing of error handling
+
 h1 {
     color: $primary-color;
     font-size: 120px;
